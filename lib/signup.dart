@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login.dart';
 
 class scafold_signup extends StatelessWidget {
   const scafold_signup({super.key});
@@ -103,18 +104,22 @@ class _SignUpScaffoldState extends State<SignUpScaffold> {
                     };
                     print(userData);
                     showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Sign Up Successful'),
-                        content: const Text('You have successfully signed up.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: const Text('Sign Up Successful'),
+                              content: const Text(
+                                  'You have successfully signed up.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => scafold_login())));
                   }
                 },
                 child: const Text('Sign Up'),

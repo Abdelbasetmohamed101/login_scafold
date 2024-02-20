@@ -1,32 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:login_scafold/main.dart';
 
-class scafold_signup extends StatelessWidget {
-  const scafold_signup({super.key});
+// the e-mail is mraboda123@example.com
+// the password is 1234
+
+class scafold_login extends StatelessWidget {
+  const scafold_login({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignUpScaffold(),
+      home: LoginScaffold(),
     );
   }
 }
 
-class SignUpScaffold extends StatefulWidget {
-  const SignUpScaffold({Key? key}) : super(key: key);
+class LoginScaffold extends StatefulWidget {
+  const LoginScaffold({Key? key}) : super(key: key);
+
   @override
-  State<SignUpScaffold> createState() => _SignUpScaffoldState();
+  State<LoginScaffold> createState() => _LoginScaffoldState();
 }
 
-class _SignUpScaffoldState extends State<SignUpScaffold> {
+class _LoginScaffoldState extends State<LoginScaffold> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+      ),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -34,21 +43,6 @@ class _SignUpScaffoldState extends State<SignUpScaffold> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
-                controller: _usernameController,
-                decoration: const InputDecoration(
-                  labelText: 'Username',
-                  hintMaxLines: 1,
-                  hintText: 'Enter your username',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Username is required';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 10.0),
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -88,6 +82,7 @@ class _SignUpScaffoldState extends State<SignUpScaffold> {
                   if (value == null || value.isEmpty) {
                     return 'Password is required';
                   }
+
                   return null;
                 },
               ),
@@ -95,30 +90,45 @@ class _SignUpScaffoldState extends State<SignUpScaffold> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // You can add your sign-up logic here
-                    Map<String, String> userData = {
-                      'username': _usernameController.text,
-                      'email': _emailController.text,
-                      'password': _passwordController.text,
-                    };
-                    print(userData);
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Sign Up Successful'),
-                        content: const Text('You have successfully signed up.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
+                    if (_emailController.text == 'mraboda123@example.com' &&
+                        _passwordController.text == '1234') {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Login Successful'),
+                          content: const Text(
+                              'You have successfully accessed the system.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Login Failed'),
+                          content: const Text('Invalid email or password.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   }
                 },
-                child: const Text('Sign Up'),
+                child: const Text('Login'),
               ),
+              ElevatedButton(
+                  onPressed: () =>
+                      Navigator.of(SignUpScaffold as BuildContext).pop(),
+                  child: Text("create new account"))
             ],
           ),
         ),
